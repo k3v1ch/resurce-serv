@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Мои заметки</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+
+    <!-- БЛОК АВТОРИЗАЦИИ -->
+    <div class="card" id="auth-section">
+        <h1>📝 Мои заметки</h1>
+        <p class="subtitle">Войдите чтобы управлять заметками</p>
+
+        <div id="auth-message"></div>
+
+        <input type="email" id="email" placeholder="Email" />
+        <input type="password" id="password" placeholder="Пароль" />
+
+        <button class="btn-primary" onclick="login()">Войти</button>
+    </div>
+
+    <!-- БЛОК ЗАМЕТОК -->
+    <div id="notes-section">
+        <div class="card">
+            <div class="user-info">
+                <span class="user-email" id="user-email"></span>
+                <button class="btn-logout" onclick="logout()">Выйти</button>
+            </div>
+
+            <h2>Новая заметка</h2>
+            <div id="create-message"></div>
+
+            <input type="text" id="new-title" placeholder="Заголовок" />
+            <textarea id="new-content" placeholder="Текст заметки"></textarea>
+
+            <button class="btn-primary" onclick="createNote()">Добавить заметку</button>
+        </div>
+
+        <div class="card">
+            <h2>Мои заметки</h2>
+            <div id="notes-list"></div>
+        </div>
+    </div>
+
+</div>
+
+<!-- МОДАЛЬНОЕ ОКНО РЕДАКТИРОВАНИЯ -->
+<div class="modal-overlay" id="edit-modal">
+    <div class="modal">
+        <h2>Редактировать заметку</h2>
+
+        <input type="text" id="edit-title" placeholder="Заголовок" />
+        <textarea id="edit-content" placeholder="Текст заметки"></textarea>
+
+        <div class="modal-actions">
+            <button class="btn-edit" onclick="saveEdit()">Сохранить</button>
+            <button class="btn-cancel" onclick="closeModal()">Отмена</button>
+        </div>
+    </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
