@@ -1,6 +1,5 @@
 package com.f4ture.resourceserv.Controller;
 import com.f4ture.resourceserv.Entity.Note;
-import com.f4ture.resourceserv.Repository.NoteRepository;
 import com.f4ture.resourceserv.Service.NoteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -13,7 +12,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/notes")
 public class NoteController {
-    public final NoteService noteService;
+    private final NoteService noteService;
 
     @GetMapping
     public List<Note> getAllNotes() {

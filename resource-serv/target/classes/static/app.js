@@ -63,6 +63,17 @@ async function loadNotes() {
     }
 }
 
+function escapeHtml(str) {
+    return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+
+const noteStore = {};
+
 function renderNotes(notes) {
     const list = document.getElementById('notes-list');
 
@@ -71,16 +82,18 @@ function renderNotes(notes) {
         return;
     }
 
+    notes.forEach(note => { noteStore[note.id] = note; });
+
     list.innerHTML = notes.map(note => `
         <div class="note-card">
             <div class="note-header">
-                <span class="note-title">${note.title}</span>
+                <span class="note-title">${escapeHtml(note.title)}</span>
                 <div class="note-actions">
-                    <button class="btn-edit" onclick="openEdit(${note.id}, '${note.title}', '${note.content}')">✏️</button>
+                    <button class="btn-edit" onclick="openEdit(${note.id})">✏️</button>
                     <button class="btn-danger" onclick="deleteNote(${note.id})">🗑️</button>
                 </div>
             </div>
-            <div class="note-content">${note.content}</div>
+            <div class="note-content">${escapeHtml(note.content)}</div>
             <div class="note-date">
                 Создана: ${new Date(note.createdAt).toLocaleString('ru')}
             </div>
@@ -118,10 +131,11 @@ async function createNote() {
     }
 }
 
-function openEdit(id, title, content) {
+function openEdit(id) {
     editingNoteId = id;
-    document.getElementById('edit-title').value = title;
-    document.getElementById('edit-content').value = content;
+    const note = noteStore[id];
+    document.getElementById('edit-title').value = note.title;
+    document.getElementById('edit-content').value = note.content;
     document.getElementById('edit-modal').classList.add('active');
 }
 
