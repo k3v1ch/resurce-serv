@@ -6,8 +6,8 @@ com/f4ture/registrationserv/DTO/LoginRequest.class
 com/f4ture/registrationserv/Entity/User$UserBuilder.class
 com/f4ture/registrationserv/DTO/TotpLoginRequest.class
 com/f4ture/registrationserv/Service/TotpService.class
-com/f4ture/registrationserv/Service/UserService$TotpAlreadyEnabledException.class
 com/f4ture/registrationserv/Entity/User.class
+com/f4ture/registrationserv/Service/UserService$TotpAlreadyEnabledException.class
 com/f4ture/registrationserv/Service/UserService$LoginResult.class
 com/f4ture/registrationserv/Service/UserService$EmailAlreadyExistsException.class
 com/f4ture/registrationserv/Security/SecurityConfig.class
