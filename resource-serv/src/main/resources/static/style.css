@@ -124,8 +124,19 @@ button {
 #auth-section {
 }
 
+#totp-section {
+    display: none;
+}
+
 #notes-section {
     display: none;
+}
+
+.btn-back {
+    background: #eee;
+    color: #333;
+    width: 100%;
+    margin-top: 8px;
 }
 
 .user-info {

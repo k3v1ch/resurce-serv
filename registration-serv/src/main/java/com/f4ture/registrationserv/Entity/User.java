@@ -24,6 +24,13 @@ public class User {
     @Column(nullable = false)
     private String password;
 
+    @Column
+    private String totpSecret;
+
+    @Column(nullable = false)
+    @Builder.Default
+    private boolean totpEnabled = false;
+
     @CreationTimestamp
     private LocalDateTime createdAt;
 }

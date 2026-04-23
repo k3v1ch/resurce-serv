@@ -2,16 +2,24 @@ const AUTH_URL = 'http://' + window.location.hostname + ':8082/api/auth';
 const NOTES_URL = '/api/notes';
 
 let accessToken = null;
+let preAuthToken = null;
 let editingNoteId = null;
+
+const noteStore = {};
 
 function showMessage(elementId, text, type) {
     const el = document.getElementById(elementId);
     el.innerHTML = `<div class="message ${type}">${text}</div>`;
-    setTimeout(() => el.innerHTML = '', 3000);
+    setTimeout(() => el.innerHTML = '', 3500);
 }
 
+function goToRegister() {
+    window.location.href = 'http://' + window.location.hostname + ':8082/';
+}
+
+// ── Логин (шаг 1) ──────────────────────────────────────────────
 async function login() {
-    const email = document.getElementById('email').value;
+    const email = document.getElementById('email').value.trim();
     const password = document.getElementById('password').value;
 
     try {
@@ -20,7 +28,6 @@ async function login() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email, password })
         });
-
         const data = await response.json();
 
         if (!response.ok) {
@@ -28,36 +35,90 @@ async function login() {
             return;
         }
 
-        accessToken = data.token;
-        document.getElementById('user-email').textContent = email;
-        document.getElementById('auth-section').style.display = 'none';
-        document.getElementById('notes-section').style.display = 'block';
+        if (data.requiresTotp) {
+            preAuthToken = data.preAuthToken;
+            document.getElementById('auth-section').style.display = 'none';
+            document.getElementById('totp-section').style.display = 'block';
+            document.getElementById('totp-code').focus();
+            return;
+        }
 
-        loadNotes();
+        onLoginSuccess(email, data.token);
 
     } catch (e) {
         showMessage('auth-message', 'Не удалось подключиться к серверу', 'error');
     }
 }
 
+// ── TOTP (шаг 2) ───────────────────────────────────────────────
+async function submitTotp() {
+    const code = document.getElementById('totp-code').value.trim();
+
+    if (code.length !== 6 || !/^\d+$/.test(code)) {
+        showMessage('totp-message', 'Введите 6-значный цифровой код', 'error');
+        return;
+    }
+
+    try {
+        const response = await fetch(`${AUTH_URL}/2fa/login`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ preAuthToken, code })
+        });
+        const data = await response.json();
+
+        if (!response.ok) {
+            showMessage('totp-message', data.message || 'Неверный код', 'error');
+            document.getElementById('totp-code').value = '';
+            return;
+        }
+
+        const email = document.getElementById('email').value.trim();
+        onLoginSuccess(email, data.token);
+
+    } catch (e) {
+        showMessage('totp-message', 'Ошибка подключения', 'error');
+    }
+}
+
+function backToLogin() {
+    preAuthToken = null;
+    document.getElementById('totp-code').value = '';
+    document.getElementById('totp-section').style.display = 'none';
+    document.getElementById('auth-section').style.display = 'block';
+}
+
+function onLoginSuccess(email, token) {
+    accessToken = token;
+    preAuthToken = null;
+    document.getElementById('user-email').textContent = email;
+    document.getElementById('auth-section').style.display = 'none';
+    document.getElementById('totp-section').style.display = 'none';
+    document.getElementById('notes-section').style.display = 'block';
+    loadNotes();
+}
+
+// ── Выход ───────────────────────────────────────────────────────
 function logout() {
     accessToken = null;
+    preAuthToken = null;
     document.getElementById('auth-section').style.display = 'block';
+    document.getElementById('totp-section').style.display = 'none';
     document.getElementById('notes-section').style.display = 'none';
     document.getElementById('notes-list').innerHTML = '';
     document.getElementById('email').value = '';
     document.getElementById('password').value = '';
+    document.getElementById('totp-code').value = '';
 }
 
+// ── Заметки ─────────────────────────────────────────────────────
 async function loadNotes() {
     try {
         const response = await fetch(NOTES_URL, {
             headers: { 'Authorization': `Bearer ${accessToken}` }
         });
-
         const notes = await response.json();
         renderNotes(notes);
-
     } catch (e) {
         console.error('Ошибка загрузки заметок', e);
     }
@@ -71,8 +132,6 @@ function escapeHtml(str) {
         .replace(/"/g, '&quot;')
         .replace(/'/g, '&#39;');
 }
-
-const noteStore = {};
 
 function renderNotes(notes) {
     const list = document.getElementById('notes-list');
@@ -113,19 +172,14 @@ async function createNote() {
     try {
         const response = await fetch(
             `${NOTES_URL}?title=${encodeURIComponent(title)}&content=${encodeURIComponent(content)}`,
-            {
-                method: 'POST',
-                headers: { 'Authorization': `Bearer ${accessToken}` }
-            }
+            { method: 'POST', headers: { 'Authorization': `Bearer ${accessToken}` } }
         );
-
         if (response.ok) {
             document.getElementById('new-title').value = '';
             document.getElementById('new-content').value = '';
             showMessage('create-message', 'Заметка добавлена!', 'success');
             loadNotes();
         }
-
     } catch (e) {
         showMessage('create-message', 'Ошибка создания заметки', 'error');
     }
@@ -151,17 +205,9 @@ async function saveEdit() {
     try {
         const response = await fetch(
             `${NOTES_URL}/${editingNoteId}?title=${encodeURIComponent(title)}&content=${encodeURIComponent(content)}`,
-            {
-                method: 'PUT',
-                headers: { 'Authorization': `Bearer ${accessToken}` }
-            }
+            { method: 'PUT', headers: { 'Authorization': `Bearer ${accessToken}` } }
         );
-
-        if (response.ok) {
-            closeModal();
-            loadNotes();
-        }
-
+        if (response.ok) { closeModal(); loadNotes(); }
     } catch (e) {
         console.error('Ошибка обновления', e);
     }
@@ -169,16 +215,23 @@ async function saveEdit() {
 
 async function deleteNote(id) {
     if (!confirm('Удалить заметку?')) return;
-
     try {
         await fetch(`${NOTES_URL}/${id}`, {
             method: 'DELETE',
             headers: { 'Authorization': `Bearer ${accessToken}` }
         });
-
         loadNotes();
-
     } catch (e) {
         console.error('Ошибка удаления', e);
     }
 }
+
+// ── Клавиатура ──────────────────────────────────────────────────
+document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Enter') return;
+    if (document.getElementById('totp-section').style.display !== 'none') {
+        submitTotp();
+    } else if (document.getElementById('auth-section').style.display !== 'none') {
+        login();
+    }
+});

@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
-import java.nio.charset.StandardCharsets;
 
 @Service
 public class JwtService {
@@ -17,17 +16,22 @@ public class JwtService {
     private String secret;
 
     public String extractEmail(String token) {
-        return extractClaims(token).getSubject();
+        Claims claims = extractClaims(token);
+        if (!"FULL".equals(claims.get("type", String.class))) {
+            throw new IllegalArgumentException("Invalid token type");
+        }
+        return claims.getSubject();
     }
 
     public boolean isTokenValid(String token) {
         try {
-            extractClaims(token);
+            extractEmail(token);
             return true;
-        } catch (Exception e){
+        } catch (Exception e) {
             return false;
         }
     }
+
     private Claims extractClaims(String token) {
         return Jwts.parser()
                 .verifyWith(getSigningKey())
@@ -35,6 +39,7 @@ public class JwtService {
                 .parseSignedClaims(token)
                 .getPayload();
     }
+
     private SecretKey getSigningKey() {
         byte[] keyBytes = Decoders.BASE64.decode(secret);
         return Keys.hmacShaKeyFor(keyBytes);

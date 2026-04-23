@@ -8,20 +8,39 @@
 <body>
 <div class="container">
 
-    <!-- БЛОК АВТОРИЗАЦИИ -->
+    <!-- Шаг 1: email + пароль -->
     <div class="card" id="auth-section">
-        <h1>📝 Мои заметки</h1>
+        <h1>Мои заметки</h1>
         <p class="subtitle">Войдите чтобы управлять заметками</p>
 
         <div id="auth-message"></div>
 
-        <input type="email" id="email" placeholder="Email" />
-        <input type="password" id="password" placeholder="Пароль" />
+        <input type="email" id="email" placeholder="Email" autocomplete="email" />
+        <input type="password" id="password" placeholder="Пароль" autocomplete="current-password" />
 
         <button class="btn-primary" onclick="login()">Войти</button>
+
+        <p class="hint">
+            Нет аккаунта?
+            <a href="javascript:void(0)" onclick="goToRegister()">Зарегистрироваться</a>
+        </p>
     </div>
 
-    <!-- БЛОК ЗАМЕТОК -->
+    <!-- Шаг 2: TOTP (показывается только если включена 2FA) -->
+    <div class="card" id="totp-section" style="display:none">
+        <h1>Двухфакторная аутентификация</h1>
+        <p class="subtitle">Введите код из приложения-аутентификатора</p>
+
+        <div id="totp-message"></div>
+
+        <input type="text" id="totp-code" placeholder="6-значный код"
+               maxlength="6" inputmode="numeric" autocomplete="one-time-code" />
+
+        <button class="btn-primary" onclick="submitTotp()">Подтвердить</button>
+        <button class="btn-back" onclick="backToLogin()">Назад</button>
+    </div>
+
+    <!-- Блок заметок -->
     <div id="notes-section">
         <div class="card">
             <div class="user-info">
@@ -46,7 +65,7 @@
 
 </div>
 
-<!-- МОДАЛЬНОЕ ОКНО РЕДАКТИРОВАНИЯ -->
+<!-- Модальное окно редактирования -->
 <div class="modal-overlay" id="edit-modal">
     <div class="modal">
         <h2>Редактировать заметку</h2>

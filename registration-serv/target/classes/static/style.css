@@ -99,3 +99,35 @@ button {
 .hint a:hover {
     text-decoration: underline;
 }
+
+.qr-wrapper {
+    display: flex;
+    justify-content: center;
+    margin: 16px 0;
+}
+
+.secret-box {
+    background: #f5f5f5;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.secret-label {
+    color: #666;
+    font-size: 13px;
+    white-space: nowrap;
+}
+
+.secret-box code {
+    font-family: monospace;
+    font-size: 13px;
+    color: #333;
+    word-break: break-all;
+    letter-spacing: 1px;
+}

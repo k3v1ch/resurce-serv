@@ -8,4 +8,6 @@ import lombok.Data;
 public class RegisterResponse {
     private String email;
     private String message;
+    private String totpSecret;
+    private String qrCodeUri;
 }

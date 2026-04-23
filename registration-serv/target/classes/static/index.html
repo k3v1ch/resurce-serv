@@ -7,7 +7,9 @@
 </head>
 <body>
 <div class="container">
-    <div class="card">
+
+    <!-- Шаг 1: форма регистрации -->
+    <div class="card" id="register-step">
         <h1>Регистрация</h1>
         <p class="subtitle">Создайте аккаунт, чтобы пользоваться заметками</p>
 
@@ -21,11 +23,39 @@
 
         <p class="hint">
             Уже есть аккаунт?
-            <a href="http://localhost:8081/">Войти</a>
+            <a href="javascript:void(0)" onclick="goToLogin()">Войти</a>
         </p>
     </div>
+
+    <!-- Шаг 2: настройка 2FA -->
+    <div class="card" id="totp-step" style="display:none">
+        <h1>Настройка 2FA</h1>
+        <p class="subtitle">Отсканируйте QR-код в приложении-аутентификаторе</p>
+
+        <div id="totp-message"></div>
+
+        <div class="qr-wrapper">
+            <div id="qrcode-container"></div>
+        </div>
+
+        <div class="secret-box">
+            <span class="secret-label">Ключ вручную:</span>
+            <code id="totp-secret-text"></code>
+        </div>
+
+        <p class="hint" style="margin-bottom:12px; margin-top:0">
+            Используйте Google Authenticator, Authy или любое TOTP-приложение
+        </p>
+
+        <input type="text" id="totp-code" placeholder="6-значный код из приложения"
+               maxlength="6" inputmode="numeric" autocomplete="one-time-code" />
+
+        <button class="btn-primary" onclick="confirmTotp()">Активировать 2FA</button>
+    </div>
+
 </div>
 
+<script src="qrcode.min.js"></script>
 <script src="app.js"></script>
 </body>
 </html>
