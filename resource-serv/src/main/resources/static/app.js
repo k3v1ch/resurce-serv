@@ -1,5 +1,5 @@
-const AUTH_URL = 'http://localhost:8080/api/auth';
-const NOTES_URL = 'http://localhost:8081/api/notes';
+const AUTH_URL = 'http://' + window.location.hostname + ':8082/api/auth';
+const NOTES_URL = '/api/notes';
 
 let accessToken = null;
 let editingNoteId = null;
@@ -28,7 +28,7 @@ async function login() {
             return;
         }
 
-        accessToken = data.accessToken;
+        accessToken = data.token;
         document.getElementById('user-email').textContent = email;
         document.getElementById('auth-section').style.display = 'none';
         document.getElementById('notes-section').style.display = 'block';

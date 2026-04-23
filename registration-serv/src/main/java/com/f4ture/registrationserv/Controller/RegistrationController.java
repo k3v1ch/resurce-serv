@@ -1,5 +1,7 @@
 package com.f4ture.registrationserv.Controller;
 
+import com.f4ture.registrationserv.DTO.LoginRequest;
+import com.f4ture.registrationserv.DTO.LoginResponse;
 import com.f4ture.registrationserv.DTO.RegisterRequest;
 import com.f4ture.registrationserv.DTO.RegisterResponse;
 import com.f4ture.registrationserv.Entity.User;
@@ -21,11 +23,24 @@ public class RegistrationController {
 
     private final UserService userService;
 
+    @PostMapping("/login")
+    public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest request) {
+        String token = userService.login(request);
+        return ResponseEntity.ok(new LoginResponse(token));
+    }
+
     @PostMapping("/register")
     public ResponseEntity<RegisterResponse> register(@Valid @RequestBody RegisterRequest request) {
         User user = userService.register(request);
         RegisterResponse body = new RegisterResponse(user.getEmail(), "Регистрация прошла успешно");
         return ResponseEntity.status(HttpStatus.CREATED).body(body);
+    }
+
+    @ExceptionHandler(UserService.InvalidCredentialsException.class)
+    public ResponseEntity<Map<String, String>> handleInvalidCredentials(UserService.InvalidCredentialsException e) {
+        Map<String, String> body = new HashMap<>();
+        body.put("message", e.getMessage());
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(body);
     }
 
     @ExceptionHandler(UserService.EmailAlreadyExistsException.class)

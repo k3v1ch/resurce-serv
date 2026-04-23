@@ -1,0 +1,17 @@
+server.port: 8082
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/auth
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  application.name: registration-serv
+
+app.jwt.secret: r8Y2m8M3W4fJcLq1dP7sVn0KxT9aQh5uE2yN6bR1gF4zJ7kL0wD3cH8pS5tU1vI9oB2nM6xQ4eZ7yAaCp9LmZQ==

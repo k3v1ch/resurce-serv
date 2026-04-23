@@ -1,5 +1,5 @@
-const REGISTER_URL = 'http://localhost:8082/api/auth/register';
-const LOGIN_PAGE_URL = 'http://localhost:8081/';
+const REGISTER_URL = '/api/auth/register';
+const LOGIN_PAGE_URL = 'http://' + window.location.hostname + ':8081/';
 
 function showMessage(text, type) {
     const el = document.getElementById('register-message');

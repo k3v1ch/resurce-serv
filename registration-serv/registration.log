@@ -1,0 +1,73 @@
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.0.5)
+
+2026-04-22T12:30:08.367Z  INFO 246761 --- [registration-serv] [           main] c.f.r.RegistrationServApplication        : Starting RegistrationServApplication v0.0.1-SNAPSHOT using Java 25.0.2 with PID 246761 (/root/resurce-serv/registration-serv/target/registration-serv-0.0.1-SNAPSHOT.jar started by root in /root/resurce-serv/registration-serv)
+2026-04-22T12:30:08.387Z  INFO 246761 --- [registration-serv] [           main] c.f.r.RegistrationServApplication        : No active profile set, falling back to 1 default profile: "default"
+2026-04-22T12:30:13.689Z  INFO 246761 --- [registration-serv] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-04-22T12:30:14.040Z  INFO 246761 --- [registration-serv] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 304 ms. Found 1 JPA repository interface.
+2026-04-22T12:30:19.074Z  INFO 246761 --- [registration-serv] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8082 (http)
+2026-04-22T12:30:19.193Z  INFO 246761 --- [registration-serv] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-04-22T12:30:19.198Z  INFO 246761 --- [registration-serv] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.20]
+2026-04-22T12:30:19.835Z  INFO 246761 --- [registration-serv] [           main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 10994 ms
+2026-04-22T12:30:22.743Z  INFO 246761 --- [registration-serv] [           main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-04-22T12:30:23.049Z  INFO 246761 --- [registration-serv] [           main] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.2.7.Final
+2026-04-22T12:30:26.496Z  INFO 246761 --- [registration-serv] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-04-22T12:30:26.762Z  INFO 246761 --- [registration-serv] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-04-22T12:30:28.277Z  INFO 246761 --- [registration-serv] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@7b8d6c66
+2026-04-22T12:30:28.290Z  INFO 246761 --- [registration-serv] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-04-22T12:30:28.820Z  INFO 246761 --- [registration-serv] [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:postgresql://localhost:5432/auth]
+	Database driver: PostgreSQL JDBC Driver
+	Database dialect: PostgreSQLDialect
+	Database version: 16.13
+	Default catalog/schema: auth/public
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-04-22T12:30:43.409Z  INFO 246761 --- [registration-serv] [           main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-04-22T12:30:43.687Z  INFO 246761 --- [registration-serv] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-04-22T12:30:44.155Z  INFO 246761 --- [registration-serv] [           main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-04-22T12:30:45.450Z  WARN 246761 --- [registration-serv] [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-22T12:30:46.002Z  WARN 246761 --- [registration-serv] [           main] .s.a.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: b7a290eb-00ce-4e29-a89c-f7097b5dd29a
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-04-22T12:30:46.050Z  INFO 246761 --- [registration-serv] [           main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2026-04-22T12:30:47.375Z  INFO 246761 --- [registration-serv] [           main] o.s.b.w.a.WelcomePageHandlerMapping      : Adding welcome page: class path resource [static/index.html]
+2026-04-22T12:30:49.282Z  INFO 246761 --- [registration-serv] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8082 (http) with context path '/'
+2026-04-22T12:30:49.337Z  INFO 246761 --- [registration-serv] [           main] c.f.r.RegistrationServApplication        : Started RegistrationServApplication in 44.23 seconds (process running for 51.076)
+2026-04-22T12:31:10.727Z  INFO 246761 --- [registration-serv] [nio-8082-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-04-22T12:31:10.727Z  INFO 246761 --- [registration-serv] [nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-04-22T12:31:10.745Z  INFO 246761 --- [registration-serv] [nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 11 ms
+Hibernate: select u1_0.id from users u1_0 where u1_0.email=? fetch first ? rows only
+Hibernate: insert into users (created_at,email,password) values (?,?,?)
+Hibernate: select u1_0.id,u1_0.created_at,u1_0.email,u1_0.password from users u1_0 where u1_0.email=?
+Hibernate: select u1_0.id from users u1_0 where u1_0.email=? fetch first ? rows only
+Exception in thread "SpringApplicationShutdownHook" java.lang.NoClassDefFoundError: ch/qos/logback/classic/spi/ThrowableProxy
+	at ch.qos.logback.classic.spi.LoggingEvent.<init>(LoggingEvent.java:145)
+	at ch.qos.logback.classic.Logger.buildLoggingEventAndAppend(Logger.java:429)
+	at ch.qos.logback.classic.Logger.filterAndLog_0_Or3Plus(Logger.java:388)
+	at ch.qos.logback.classic.Logger.log(Logger.java:805)
+	at org.apache.commons.logging.impl.Slf4jLogFactory$Slf4jLocationAwareLog.log(Slf4jLogFactory.java:126)
+	at org.apache.commons.logging.impl.Slf4jLogFactory$Slf4jLocationAwareLog.warn(Slf4jLogFactory.java:146)
+	at org.springframework.context.support.AbstractApplicationContext.doClose(AbstractApplicationContext.java:1202)
+	at org.springframework.boot.web.server.servlet.context.ServletWebServerApplicationContext.doClose(ServletWebServerApplicationContext.java:176)
+	at org.springframework.context.support.AbstractApplicationContext.close(AbstractApplicationContext.java:1153)
+	at org.springframework.boot.SpringApplicationShutdownHook.closeAndWait(SpringApplicationShutdownHook.java:147)
+	at java.base/java.lang.Iterable.forEach(Iterable.java:75)
+	at org.springframework.boot.SpringApplicationShutdownHook.run(SpringApplicationShutdownHook.java:116)
+	at java.base/java.lang.Thread.run(Thread.java:1474)
+Caused by: java.lang.ClassNotFoundException: ch.qos.logback.classic.spi.ThrowableProxy
+	... 13 more

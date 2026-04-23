@@ -1,0 +1,8 @@
+/root/resurce-serv/resource-serv/src/main/java/com/f4ture/resourceserv/Controller/NoteController.java
+/root/resurce-serv/resource-serv/src/main/java/com/f4ture/resourceserv/Entity/Note.java
+/root/resurce-serv/resource-serv/src/main/java/com/f4ture/resourceserv/Repository/NoteRepository.java
+/root/resurce-serv/resource-serv/src/main/java/com/f4ture/resourceserv/ResourceServApplication.java
+/root/resurce-serv/resource-serv/src/main/java/com/f4ture/resourceserv/Security/JwtAuthenticationFilter.java
+/root/resurce-serv/resource-serv/src/main/java/com/f4ture/resourceserv/Security/JwtService.java
+/root/resurce-serv/resource-serv/src/main/java/com/f4ture/resourceserv/Security/SecurityConfig.java
+/root/resurce-serv/resource-serv/src/main/java/com/f4ture/resourceserv/Service/NoteService.java

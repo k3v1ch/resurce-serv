@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Регистрация</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+    <div class="card">
+        <h1>Регистрация</h1>
+        <p class="subtitle">Создайте аккаунт, чтобы пользоваться заметками</p>
+
+        <div id="register-message"></div>
+
+        <input type="email" id="email" placeholder="Email" autocomplete="email" />
+        <input type="password" id="password" placeholder="Пароль (минимум 6 символов)" autocomplete="new-password" />
+        <input type="password" id="password-confirm" placeholder="Повторите пароль" autocomplete="new-password" />
+
+        <button class="btn-primary" onclick="register()">Зарегистрироваться</button>
+
+        <p class="hint">
+            Уже есть аккаунт?
+            <a href="http://localhost:8081/">Войти</a>
+        </p>
+    </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
